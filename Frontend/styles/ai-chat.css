@@ -1,0 +1,114 @@
+.ai-chat {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ai-chat__messages {
+  background: #fcfdff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: clamp(240px, 42vh, 420px);
+  min-height: 200px;
+  overflow-y: auto;
+  padding: var(--space-3);
+}
+
+.ai-msg {
+  border-radius: var(--radius-sm);
+  max-width: 80%;
+  padding: 10px 12px;
+}
+
+.ai-msg__text {
+  margin: 0;
+}
+
+.ai-msg__image {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.ai-msg__price-block {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.ai-msg__price-total {
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.ai-msg__price-note {
+  color: var(--text-muted, #64748b);
+  font-size: 0.9rem;
+  margin: 0 0 8px;
+}
+
+.ai-msg__price-breakdown {
+  color: var(--text-muted, #64748b);
+  font-size: 0.85rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.ai-msg__price-breakdown li {
+  margin-bottom: 4px;
+}
+
+.ai-msg__actions {
+  margin-top: 12px;
+}
+
+.ai-msg__cart-btn {
+  max-width: 240px;
+}
+
+.ai-msg--assistant { align-self: flex-start; background: #f3f4f6; }
+.ai-msg--user { align-self: flex-end; background: #e0e7ff; }
+
+.ai-chat__form {
+  align-items: stretch;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+
+.ai-chat__input {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+  padding: 12px;
+  width: 100%;
+}
+
+.ai-chat__form .btn {
+  align-self: stretch;
+}
+
+@media (min-width: 641px) {
+  .ai-chat__form {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .ai-chat__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+  }
+
+  .ai-chat__form .btn {
+    align-self: stretch;
+    flex: 0 0 auto;
+  }
+}

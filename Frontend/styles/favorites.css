@@ -1,0 +1,45 @@
+/* Favorites page styles (макет по PDF). */
+
+.favorites-tools {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.favorites-tools__row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  color: var(--text-muted);
+}
+
+.favorites-tools__label {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.favorites-tools__count {
+  font-weight: 800;
+}
+
+.favorites-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.favorites-preview {
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .favorites-actions {
+    grid-template-columns: 1fr;
+  }
+}
+

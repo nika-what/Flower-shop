@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f5f7fb" />
+    <title>FloraBloom</title>
+    <link rel="stylesheet" href="./styles/global.css" />
+    <link rel="stylesheet" href="./styles/layout.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/cards.css" />
+    <link rel="stylesheet" href="./styles/ai-chat.css" />
+    <link rel="stylesheet" href="./styles/cart.css" />
+    <link rel="stylesheet" href="./styles/favorites.css" />
+    <link rel="stylesheet" href="./styles/profile.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <header class="site-header" id="site-header"></header>
+
+      <main class="main-content container" id="main-content">
+        <section class="page page--active" id="page-home" data-page="home">
+          <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__left">
+              <h1 class="hero__title" id="hero-title">Свежие букеты<br />с доставкой по городу</h1>
+              <p class="hero__text">
+                Создайте идеальную композицию для любого случая. Быстрая доставка, свежие цветы, доступные цены.
+              </p>
+              <button class="btn btn--primary btn--lg" id="ai-cta-btn" type="button">
+                Создай свой букет с помощью AI-ассистента
+              </button>
+              <p class="hero__hint">✨ Искусственный интеллект поможет подобрать идеальную композицию</p>
+            </div>
+            <div class="hero__right">
+              <div class="hero__image"></div>
+            </div>
+          </section>
+
+          <section class="top-bouquets" aria-labelledby="top-bouquets-title">
+            <div class="section-head">
+              <h2 class="section-title" id="top-bouquets-title">Рекомендованные букеты</h2>
+              <button class="text-link" type="button" data-nav-link="catalog">Смотреть все</button>
+            </div>
+            <div class="filter-row">
+              <button class="chip chip--active" type="button">Все</button>
+              <button class="chip" type="button">Хиты продаж</button>
+              <button class="chip" type="button">Акции</button>
+              <button class="chip" type="button">Популярные</button>
+            </div>
+            <div class="bouquet-grid" id="bouquet-grid"></div>
+          </section>
+
+          <section class="promotions" aria-labelledby="promo-title">
+            <h2 class="section-title" id="promo-title">Акции и специальные предложения</h2>
+            <div class="promo-grid">
+              <article class="promo-card">
+                <p class="promo-card__badge">-30%</p>
+                <h3 class="promo-card__title">Скидка на первый заказ</h3>
+                <p class="promo-card__text">Зарегистрируйтесь и получите скидку 30% на первый букет.</p>
+                <button class="btn btn--secondary" type="button">Получить скидку</button>
+              </article>
+              <article class="promo-card">
+                <p class="promo-card__badge">2+1</p>
+                <h3 class="promo-card__title">Три букета по цене двух</h3>
+                <p class="promo-card__text">Закажите два букета и получите третий в подарок.</p>
+                <button class="btn btn--secondary" type="button">Выбрать букеты</button>
+              </article>
+              <article class="promo-card">
+                <p class="promo-card__badge">Бесплатно</p>
+                <h3 class="promo-card__title">Бесплатная доставка</h3>
+                <p class="promo-card__text">При заказе от 3000 рублей доставка бесплатно.</p>
+                <button class="btn btn--secondary" type="button">Оформить заказ</button>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-catalog" data-page="catalog">
+          <h2 class="section-title">Каталог букетов</h2>
+          <p class="section-text">Найдите идеальный букет для любого повода</p>
+
+          <div class="catalog-layout">
+            <aside class="catalog-filters">
+              <h3>Фильтры</h3>
+              <div class="filter-block">
+                <h4>Цена</h4>
+                <label><input type="checkbox" /> До 2000 ₽</label>
+                <label><input type="checkbox" /> 2000 - 5000 ₽</label>
+                <label><input type="checkbox" /> 5000 - 10000 ₽</label>
+              </div>
+              <div class="filter-block">
+                <h4>Тип цветов</h4>
+                <label><input type="checkbox" /> Розы</label>
+                <label><input type="checkbox" /> Пионы</label>
+                <label><input type="checkbox" /> Тюльпаны</label>
+              </div>
+            </aside>
+
+            <div>
+              <div class="catalog-tools">
+                <input class="search-input" placeholder="Поиск букетов..." />
+                <span class="section-text">Сортировать: По популярности</span>
+              </div>
+              <div class="bouquet-grid bouquet-grid--catalog" id="catalog-grid"></div>
+            </div>
+          </div>
+
+          <div class="auth-panel" id="auth-panel">
+            <h3 class="auth-panel__title">Авторизация</h3>
+            <p class="auth-panel__status" id="auth-status">Вы не авторизованы.</p>
+            <form class="auth-form" id="login-form">
+              <input class="auth-form__input" type="email" name="email" placeholder="Email" required />
+              <input class="auth-form__input" type="password" name="password" placeholder="Пароль" required />
+              <button class="btn btn--primary" type="submit">Войти</button>
+            </form>
+            <form class="auth-form" id="register-form">
+              <input class="auth-form__input" type="text" name="fullName" placeholder="Имя" required />
+              <input class="auth-form__input" type="email" name="email" placeholder="Email" required />
+              <input class="auth-form__input" type="password" name="password" placeholder="Пароль" required />
+              <button class="btn btn--secondary" type="submit">Регистрация</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="page" id="page-delivery" data-page="delivery">
+          <h2 class="section-title">Доставка</h2>
+          <p class="section-text">
+            Доставляем ежедневно с 9:00 до 22:00. При заказе от 3000 ₽ доставка бесплатная.
+          </p>
+          <div class="delivery-address-block">
+            <h3 class="delivery-address-block__title">Адрес доставки</h3>
+            <p class="section-text delivery-address-block__hint">
+              Укажите улицу и дом в Новосибирске. При вводе появляются подсказки; сохранённый адрес всегда первый в списке.
+            </p>
+            <div class="delivery-address-block__row">
+              <div class="delivery-address-block__combo" id="delivery-address-combo">
+                <label class="sr-only" for="delivery-address-input">Адрес</label>
+                <input
+                  class="auth-form__input delivery-address-block__input"
+                  id="delivery-address-input"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Например, ул. Ленина, 1"
+                  maxlength="500"
+                  aria-autocomplete="list"
+                  aria-controls="delivery-address-suggest"
+                  aria-expanded="false"
+                />
+                <ul
+                  class="delivery-address-suggest"
+                  id="delivery-address-suggest"
+                  role="listbox"
+                  hidden
+                ></ul>
+              </div>
+              <button class="btn btn--secondary" type="button" id="delivery-address-validate-btn">Проверить</button>
+            </div>
+            <p class="delivery-address-block__feedback" id="delivery-address-feedback" role="status" aria-live="polite"></p>
+            <label class="delivery-address-block__remember">
+              <input type="checkbox" id="delivery-remember-address" />
+              <span>Запомнить адрес</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="page" id="page-ai" data-page="ai">
+          <h2 class="section-title">Выберите цветы AI Флорист</h2>
+          <p class="section-text" id="ai-flowers-hint">Поможет создать идеальный букет</p>
+          <div class="ai-builder">
+            <aside class="ai-builder__left">
+              <h3>Популярные цветы</h3>
+              <div class="tag-list" id="ai-tags">
+                <button class="chip chip--soft" type="button">Лаванда</button>
+                <button class="chip chip--soft" type="button">Розы</button>
+                <button class="chip chip--soft" type="button">Хризантемы</button>
+                <button class="chip chip--soft" type="button">Тюльпаны</button>
+              </div>
+            </aside>
+          <div class="ai-chat" id="ai-chat">
+            <div class="ai-chat__messages" id="ai-messages" aria-live="polite"></div>
+              <form class="ai-chat__form" id="ai-form" autocomplete="off">
+                <input
+                  class="ai-chat__input"
+                  id="ai-input"
+                  name="ai_prompt_input"
+                  type="text"
+                  placeholder="Опишите ваш идеальный букет..."
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  aria-label="Опишите ваш идеальный букет"
+                  required
+                />
+                <button class="btn btn--primary" type="submit">Отправить</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="page-basket" data-page="basket">
+          <h2 class="section-title">Корзина</h2>
+          <p class="section-text" id="cart-status">У вас 0 товаров в корзине</p>
+
+          <div class="cart-layout">
+            <div class="cart-items" id="cart-items"></div>
+
+            <aside class="cart-summary">
+              <h3 class="cart-summary__title">Итого</h3>
+              <div class="summary-row">
+                <span>Товары (<span id="cart-items-count">0</span> шт.)</span>
+                <span class="summary-row__value" id="cart-items-total">0 ₽</span>
+              </div>
+              <div class="summary-row">
+                <span>Доставка</span>
+                <span class="summary-row__value">Бесплатно</span>
+              </div>
+              <div class="summary-row">
+                <span>Промокод</span>
+              </div>
+              <input class="promo-input" type="text" placeholder="Введите промокод" />
+              <label class="field cart-summary__comment">
+                <span class="field__label">Комментарий к заказу</span>
+                <textarea
+                  class="field__input cart-order-comment"
+                  id="cart-order-comment"
+                  rows="3"
+                  maxlength="2000"
+                  placeholder="Пожелания по доставке, открытке, времени…"
+                ></textarea>
+              </label>
+              <div class="summary-total">
+                <span>Всего к оплате</span>
+                <span class="summary-total__value" id="cart-total">0 ₽</span>
+              </div>
+              <button class="btn btn--primary btn--full" type="button" id="cart-checkout-btn">Оформить заказ</button>
+              <button class="btn btn--secondary btn--full" type="button" id="cart-continue-btn">Продолжить покупки</button>
+            </aside>
+          </div>
+
+          <section class="cart-suggestions">
+            <h3 class="section-title section-title--sm">Вам может понравиться</h3>
+            <div class="bouquet-grid" id="cart-suggestions"></div>
+          </section>
+        </section>
+
+        <section class="page" id="page-favorites" data-page="favorites">
+          <h2 class="section-title">Сохранённые букеты</h2>
+          <p class="section-text">Ваши любимые букеты в одном месте</p>
+
+          <div class="favorites-tools">
+            <div class="favorites-tools__row">
+              <span class="favorites-tools__label">Сортировать:</span>
+              <span>По дате добавления</span>
+            </div>
+            <div class="favorites-tools__row">
+              <span class="favorites-tools__label">Повод:</span>
+              <span>Все поводы</span>
+            </div>
+            <div class="favorites-tools__row">
+              <span class="favorites-tools__label">Цена:</span>
+              <span>Любая цена</span>
+            </div>
+            <div class="favorites-tools__count" id="favorites-count">0 букетов</div>
+          </div>
+
+          <div class="favorites-actions">
+            <button class="btn btn--primary btn--full" id="favorites-add-all" type="button">
+              Добавить все в корзину
+            </button>
+            <button class="btn btn--secondary btn--full" id="favorites-clear" type="button">
+              Очистить избранное
+            </button>
+          </div>
+
+          <div class="bouquet-grid" id="favorites-items"></div>
+        </section>
+
+        <section class="page" id="page-profile" data-page="profile">
+          <h2 class="section-title">Профиль</h2>
+          <p class="section-text" id="profile-status">Загрузите данные вашего профиля.</p>
+
+          <div class="auth-panel" id="profile-auth-panel" style="display: none;">
+            <h3 class="auth-panel__title">Профиль</h3>
+            <p class="auth-panel__status" id="profile-auth-status">Нужно войти, чтобы открыть профиль.</p>
+
+            <div class="auth-tabs" role="tablist" aria-label="Вход и регистрация">
+              <button
+                class="auth-tabs__tab is-active"
+                id="profile-auth-tab-login"
+                type="button"
+                role="tab"
+                aria-controls="profile-auth-login"
+                aria-selected="true"
+              >
+                Вход
+              </button>
+              <button
+                class="auth-tabs__tab"
+                id="profile-auth-tab-register"
+                type="button"
+                role="tab"
+                aria-controls="profile-auth-register"
+                aria-selected="false"
+              >
+                Регистрация
+              </button>
+            </div>
+
+            <div class="auth-tabpanels">
+              <div class="auth-tabpanel" id="profile-auth-login">
+                <form class="auth-form auth-form--vertical" id="profile-login-form">
+                  <input
+                    class="auth-form__input"
+                    id="profile-login-email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+              <input
+                    class="auth-form__input"
+                    id="profile-login-password"
+                    type="password"
+                    name="password"
+                    placeholder="Пароль"
+                required
+              />
+                  <button class="btn btn--primary btn--full" type="submit">Войти</button>
+                </form>
+
+                <div class="auth-links">
+                  <button class="text-link auth-links__link" id="profile-forgot-btn" type="button">
+                    Забыли пароль?
+                  </button>
+                </div>
+
+                <div id="profile-forgot-panel" style="display: none;">
+                  <p class="section-text" id="profile-forgot-status">Отправляю код...</p>
+                  <div class="auth-form auth-form--vertical">
+                    <input class="auth-form__input" id="profile-reset-code" type="text" placeholder="Код из письма" required />
+                    <input class="auth-form__input" id="profile-reset-new-password" type="password" placeholder="Новый пароль" required />
+                    <button class="btn btn--primary btn--full" id="profile-reset-confirm-btn" type="button">
+                      Сменить пароль
+                    </button>
+                    <button class="btn btn--secondary btn--full" id="profile-reset-cancel-btn" type="button">
+                      Отмена
+                    </button>
+                  </div>
+                </div>
+
+                <div class="auth-switch">
+                  <span>Нет аккаунта?</span>
+                  <button class="text-link auth-switch__action" type="button" data-switch-to="register">Зарегистрироваться</button>
+                </div>
+              </div>
+
+              <div class="auth-tabpanel" id="profile-auth-register" style="display: none;">
+                <form class="auth-form auth-form--vertical" id="profile-register-form">
+                  <input class="auth-form__input" type="text" name="fullName" placeholder="Имя" required />
+                  <input class="auth-form__input" id="profile-register-email" type="email" name="email" placeholder="Email" required />
+                  <input class="auth-form__input" type="password" name="password" placeholder="Пароль" required />
+                  <button class="btn btn--primary btn--full" type="submit">Зарегистрироваться</button>
+                </form>
+
+                <div class="auth-switch">
+                  <span>Уже есть аккаунт?</span>
+                  <button class="text-link auth-switch__action" type="button" data-switch-to="login">Войти</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-layout">
+            <div class="profile-content">
+              <div
+                class="auth-tabs profile-content__tabs"
+                id="profile-content-tabs"
+                role="tablist"
+                aria-label="Разделы профиля"
+                style="display: none"
+              >
+                <button
+                  type="button"
+                  class="auth-tabs__tab is-active"
+                  id="profile-tab-btn-main"
+                  data-profile-tab="main"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  Мои данные
+                </button>
+                <button
+                  type="button"
+                  class="auth-tabs__tab"
+                  id="profile-tab-btn-orders"
+                  data-profile-tab="orders"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  Заказы
+                </button>
+              </div>
+
+              <div class="profile-tabpanel is-active" id="profile-panel-main" data-profile-tab="main" role="tabpanel">
+              <section class="profile-card">
+                <div class="profile-card__head">
+                  <h3 class="profile-card__title">Личные данные</h3>
+                  <div class="profile-card__head-actions">
+                    <button class="btn btn--secondary" id="profile-edit-btn" type="button">Редактировать</button>
+                  </div>
+                </div>
+
+                <form class="profile-form" id="profile-form">
+                  <div class="profile-grid">
+                    <label class="field">
+                      <span class="field__label">Имя</span>
+                      <input class="field__input" id="profile-first-name" type="text" disabled />
+                    </label>
+                    <label class="field">
+                      <span class="field__label">Фамилия</span>
+                      <input class="field__input" id="profile-last-name" type="text" disabled />
+                    </label>
+                    <label class="field profile-grid__full">
+                      <span class="field__label">Email</span>
+                      <input class="field__input" id="profile-email" type="email" disabled />
+                    </label>
+                    <label class="field">
+                      <span class="field__label">Телефон</span>
+                      <input class="field__input" id="profile-phone" type="text" disabled />
+                    </label>
+                    <label class="field profile-grid__full">
+                      <span class="field__label">Адрес доставки</span>
+                      <input class="field__input" id="profile-address" type="text" disabled />
+                    </label>
+                    <label class="field">
+                      <span class="field__label">Дата рождения</span>
+                      <input class="field__input" id="profile-birthdate" type="date" disabled />
+                    </label>
+                    <label class="field">
+                      <span class="field__label">Пол</span>
+                      <select class="field__input" id="profile-gender" disabled>
+                        <option>Женский</option>
+                        <option>Мужской</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <div class="profile-actions" id="profile-actions" style="display: none;">
+                    <button class="btn btn--secondary" id="profile-cancel-btn" type="button">Отмена</button>
+                    <button class="btn btn--primary" id="profile-save-btn" type="button">Сохранить изменения</button>
+                  </div>
+                </form>
+
+                <button class="btn profile-sidebar__logout profile-card__logout-btn" id="logout-btn" type="button">
+                  Выйти
+                </button>
+              </section>
+
+              <section class="profile-card" id="admin-panel" style="display: none;">
+                <div class="profile-card__head">
+                  <h3 class="profile-card__title">Админ: управление карточками</h3>
+                </div>
+                <p class="section-text" id="admin-status">Загрузка...</p>
+
+                <form class="admin-form" id="admin-bouquet-form">
+                  <input type="hidden" id="admin-bouquet-id" />
+                  <label class="field">
+                    <span class="field__label">Название</span>
+                    <input class="field__input" id="admin-name" type="text" required />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Описание</span>
+                    <input class="field__input" id="admin-description" type="text" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Цена</span>
+                    <input class="field__input" id="admin-price" type="number" min="0" step="1" required />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Старая цена (для акции)</span>
+                    <input class="field__input" id="admin-old-price" type="number" min="0" step="1" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Бейдж акции (например: -20%)</span>
+                    <input class="field__input" id="admin-badge" type="text" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Изображение (PNG/WEBP)</span>
+                    <input class="field__input" id="admin-image-file" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/jpg,image/png,image/webp" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Опубликован</span>
+                    <input id="admin-published" type="checkbox" checked />
+                  </label>
+                  <div class="profile-actions">
+                    <button class="btn btn--secondary" id="admin-form-reset" type="button">Сброс</button>
+                    <button class="btn btn--primary" type="submit">Сохранить карточку</button>
+                  </div>
+            </form>
+
+                <div class="admin-list" id="admin-bouquets-list"></div>
+
+                <div class="admin-orders-block">
+                  <h4 class="admin-orders-block__title">Заказы клиентов</h4>
+                  <p class="section-text admin-orders-block__hint">
+                    Номер, фото и комментарий. Галочка «Выполнен»: заказ исчезнет из списка после появления ещё 5 новых заказов в магазине.
+                  </p>
+                  <div class="admin-orders-list" id="admin-orders-list"></div>
+                </div>
+              </section>
+
+              <section class="profile-card profile-card--favorites-preview">
+                <div class="profile-card__head">
+                  <h3 class="profile-card__title">Сохранённые букеты</h3>
+                  <span class="section-text" id="profile-favorites-count">0 букетов</span>
+                </div>
+                <div class="favorites-preview" id="favorites-preview"></div>
+              </section>
+              </div>
+
+              <div class="profile-tabpanel" id="profile-panel-orders" data-profile-tab="orders" role="tabpanel">
+                <section class="profile-card profile-card--orders">
+                  <div class="profile-card__head">
+                    <h3 class="profile-card__title">История заказов</h3>
+                    <span class="text-link" id="orders-all-link" role="button" tabindex="0">Все заказы</span>
+                  </div>
+                  <div class="orders-list" id="orders-list"></div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <div>
+            <h3 class="footer-title">FloraBloom</h3>
+            <p class="footer-text">Свежие цветы с доставкой по всему городу. Создайте идеальный букет для любого случая.</p>
+          </div>
+          <div>
+            <h4 class="footer-subtitle">Информация</h4>
+            <p class="footer-text">Условия использования<br />Политика конфиденциальности</p>
+          </div>
+          <div>
+            <h4 class="footer-subtitle">Контакты</h4>
+            <p class="footer-text">+7 (495) 123-45-67<br />info@florabloom.ru<br />Москва, ул. Цветочная, 15</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="./scripts/main.js?v=20260330"></script>
+  </body>
+</html>
